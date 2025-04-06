@@ -348,13 +348,15 @@ Is there something else I can help you with today?`
               </svg>
             </button>
           </div>
-          <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
-            <SpeechToText 
-              onTranscript={(text)  => setInputValue(text)}
-              placeholder="Click to speak"
-            />
-            <span>Press Enter to send</span>
-          </div>
+         <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
+  <ClientOnly>
+    <SpeechToText 
+      onTranscript={(text) => setInputValue(text)}
+      placeholder="Click to speak"
+    />
+  </ClientOnly>
+  <span>Press Enter to send</span>
+</div>
         </div>
       </div>
     </div>
