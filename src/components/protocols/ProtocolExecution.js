@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TextToSpeech } from '../common/SpeechUtils';
 
 export default function ProtocolExecution({ protocolId, belief, intensity, onComplete }) {
   const [currentStep, setCurrentStep] = useState(0);
@@ -164,8 +165,9 @@ export default function ProtocolExecution({ protocolId, belief, intensity, onCom
           {currentStepData.title}
         </h4>
         <p className="text-gray-700 mb-6">
-          {currentStepData.instruction}
+        {currentStepData.instruction}
         </p>
+        <TextToSpeech text={currentStepData.instruction} />
 
         {currentStepData.requiresInput && (
           <textarea
