@@ -74,7 +74,7 @@ export function TextToSpeech({ text, autoPlay = false }) {
       {!isPlaying ? (
         <button
           onClick={playText}
-          className="p-2 bg-primary-100 text-primary-700 rounded-full hover:bg-primary-200"
+          className="p-2 bg-chatgpt-dark-gray text-gray-300 rounded-full hover:bg-gray-700"
           title="Listen to text"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +87,7 @@ export function TextToSpeech({ text, autoPlay = false }) {
           {!isPaused ? (
             <button
               onClick={pauseText}
-              className="p-2 bg-primary-100 text-primary-700 rounded-full hover:bg-primary-200"
+              className="p-2 bg-chatgpt-dark-gray text-gray-300 rounded-full hover:bg-gray-700"
               title="Pause"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -97,7 +97,7 @@ export function TextToSpeech({ text, autoPlay = false }) {
           )  : (
             <button
               onClick={playText}
-              className="p-2 bg-primary-100 text-primary-700 rounded-full hover:bg-primary-200"
+              className="p-2 bg-chatgpt-dark-gray text-gray-300 rounded-full hover:bg-gray-700"
               title="Resume"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +108,7 @@ export function TextToSpeech({ text, autoPlay = false }) {
           ) }
           <button
             onClick={stopText}
-            className="p-2 bg-primary-100 text-primary-700 rounded-full hover:bg-primary-200"
+            className="p-2 bg-chatgpt-dark-gray text-gray-300 rounded-full hover:bg-gray-700"
             title="Stop"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -207,8 +207,8 @@ export function SpeechToText({ onTranscript, placeholder = "Click to speak..." }
         onClick={toggleListening}
         className={`p-2 rounded-full flex items-center justify-center ${
           isListening 
-            ? 'bg-red-100 text-red-700 animate-pulse' 
-            : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
+            ? 'bg-chatgpt-user-bubble text-white animate-pulse' 
+            : 'bg-chatgpt-dark-gray text-gray-300 hover:bg-gray-700'
         }`}
         title={isListening ? "Stop listening" : "Start speaking"}
       >
@@ -216,7 +216,7 @@ export function SpeechToText({ onTranscript, placeholder = "Click to speak..." }
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
         </svg>
       </button>
-      <span className="ml-2 text-sm text-gray-600">
+      <span className="ml-2 text-sm text-gray-500">
         {isListening ? 'Listening...' : placeholder}
       </span>
     </div>
