@@ -4,10 +4,18 @@ export function TextToSpeech({ text, autoPlay = false }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const utteranceRef = useRef(null);
+  const [isBrowser, setIsBrowser] = useState(false);
   
   useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+  
+  useEffect(() => {
+    // Only run on client side
+    if (!isBrowser) return;
+    
     // Initialize speech synthesis
-    if ('speechSynthesis' in window) {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 1.0;
       utterance.pitch = 1.0;
@@ -23,14 +31,14 @@ export function TextToSpeech({ text, autoPlay = false }) {
     }
     
     return () => {
-      if (utteranceRef.current) {
+      if (isBrowser && typeof window !== 'undefined' && 'speechSynthesis' in window && utteranceRef.current) {
         window.speechSynthesis.cancel();
       }
     };
-  }, [text, autoPlay]);
+  }, [text, autoPlay, isBrowser]);
   
   const playText = () => {
-    if ('speechSynthesis' in window) {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       if (isPaused) {
         window.speechSynthesis.resume();
       } else {
@@ -43,21 +51,21 @@ export function TextToSpeech({ text, autoPlay = false }) {
   };
   
   const pauseText = () => {
-    if ('speechSynthesis' in window) {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.pause();
       setIsPaused(true);
     }
   };
   
   const stopText = () => {
-    if ('speechSynthesis' in window) {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       setIsPlaying(false);
       setIsPaused(false);
     }
   };
   
-  if (!('speechSynthesis' in window)) {
+  if (!isBrowser || typeof window === 'undefined' || !('speechSynthesis' in window)) {
     return null;
   }
   
@@ -119,10 +127,18 @@ export function SpeechToText({ onTranscript, placeholder = "Click to speak..." }
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const recognitionRef = useRef(null);
+  const [isBrowser, setIsBrowser] = useState(false);
   
   useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+  
+  useEffect(() => {
+    // Only run on client side
+    if (!isBrowser) return;
+    
     // Initialize speech recognition
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    if (typeof window !== 'undefined' && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
       
@@ -161,11 +177,11 @@ export function SpeechToText({ onTranscript, placeholder = "Click to speak..." }
     }
     
     return () => {
-      if (recognitionRef.current) {
+      if (isBrowser && recognitionRef.current) {
         recognitionRef.current.stop();
       }
     };
-  }, [onTranscript]);
+  }, [onTranscript, isBrowser]);
   
   const toggleListening = () => {
     if (!recognitionRef.current) {
@@ -181,7 +197,7 @@ export function SpeechToText({ onTranscript, placeholder = "Click to speak..." }
     }
   };
   
-  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+  if (!isBrowser || typeof window === 'undefined' || !('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
     return null;
   }
   
