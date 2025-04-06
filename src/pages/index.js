@@ -1,9 +1,10 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import BeliefAnalysisResult from '../components/assessment/BeliefAnalysisResult'
 import ProtocolExecution from '../components/protocols/ProtocolExecution'
 import PowerDevelopment from '../components/power/PowerDevelopment'
 import PowerExercise from '../components/power/PowerExercise'
+import ApiKeySetup from '../components/common/ApiKeySetup'
 
 export default function Home() {
   const [currentView, setCurrentView] = useState('home');
@@ -11,6 +12,15 @@ export default function Home() {
   const [beliefIntensity, setBeliefIntensity] = useState(7);
   const [selectedProtocol, setSelectedProtocol] = useState('');
   const [selectedPowerArea, setSelectedPowerArea] = useState('');
+  const [hasApiKey, setHasApiKey] = useState(false);
+
+  // Check for API key on component mount
+  useEffect(() => {
+    const storedKey = localStorage.getItem('straico_api_key');
+    if (storedKey) {
+      setHasApiKey(true);
+    }
+  }, []);
 
   const handleStartAssessment = () => {
     setCurrentView('assessment');
@@ -42,6 +52,11 @@ export default function Home() {
     setCurrentView('power-exercise-complete');
   };
 
+  const handleApiKeySetupComplete = () => {
+    setHasApiKey(true);
+    setCurrentView('home');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Head>
@@ -50,37 +65,84 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-primary-700">
+            NLP Mind Reprogramming
+          </h1>
+          <nav>
+            <button 
+              onClick={() => setCurrentView('api-setup')}
+              className="text-gray-600 hover:text-primary-700 flex items-center"
+            >
+              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              {hasApiKey ? 'API Settings' : 'Set Up API Key'}
+            </button>
+          </nav>
+        </div>
+      </header>
+
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-center text-primary-700 mb-8">
-          NLP Mind Reprogramming
-        </h1>
-        <p className="text-xl text-center text-gray-700 mb-12">
-          Transform Your Limiting Beliefs & Develop Personal Power
-        </p>
-        
         {currentView === 'home' && (
-          <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Getting Started</h2>
-            <p className="text-gray-600 mb-6">
-              Begin your journey to transform limiting beliefs and develop personal power.
-            </p>
-            <div className="space-y-4">
-              <button 
-                onClick={handleStartAssessment}
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
-                Start Belief Assessment
-              </button>
-              <button 
-                onClick={() => setCurrentView('power-development')}
-                className="w-full bg-white border border-primary-600 hover:bg-primary-50 text-primary-700 font-medium py-3 px-4 rounded-md transition-colors">
-                Develop Personal Power
-              </button>
-              <button 
-                onClick={() => setCurrentView('api-setup')}
-                className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-md transition-colors">
-                API Key Setup
-              </button>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Transform Your Limiting Beliefs</h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                Identify and reprogram limiting beliefs using proven NLP techniques, and develop your personal power.
+              </p>
             </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white rounded-lg shadow-md p-8 border-t-4 border-primary-600">
+                <div className="text-3xl mb-4">🔄</div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">Belief Reprogramming</h3>
+                <p className="text-gray-600 mb-6">
+                  Identify limiting beliefs that are holding you back and transform them using powerful NLP protocols.
+                </p>
+                <button 
+                  onClick={handleStartAssessment}
+                  className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                  Start Belief Assessment
+                </button>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-md p-8 border-t-4 border-primary-600">
+                <div className="text-3xl mb-4">✨</div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">Personal Power Development</h3>
+                <p className="text-gray-600 mb-6">
+                  Develop your personal power across multiple dimensions to increase your influence and effectiveness.
+                </p>
+                <button 
+                  onClick={()  => setCurrentView('power-development')}
+                  className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                  Develop Personal Power
+                </button>
+              </div>
+            </div>
+            
+            {!hasApiKey && (
+              <div className="mt-12 bg-primary-50 rounded-lg p-6 border border-primary-100">
+                <div className="flex items-start">
+                  <svg className="w-6 h-6 text-primary-600 mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <div>
+                    <h3 className="text-lg font-medium text-primary-800 mb-2">Set Up Your Straico API Key</h3>
+                    <p className="text-primary-700 mb-4">
+                      For the best experience, connect your Straico API key to enable AI-powered belief analysis and personalized guidance.
+                    </p>
+                    <button 
+                      onClick={()  => setCurrentView('api-setup')}
+                      className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                      Set Up API Key
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -240,6 +302,17 @@ export default function Home() {
                 Return Home
               </button>
             </div>
+          </div>
+        )}
+
+        {currentView === 'api-setup' && (
+          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">API Key Setup</h2>
+            
+            <ApiKeySetup 
+              onComplete={handleApiKeySetupComplete}
+              onBack={() => setCurrentView('home')}
+            />
           </div>
         )}
       </main>
