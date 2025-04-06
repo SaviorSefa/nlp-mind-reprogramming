@@ -1,7 +1,5 @@
 import Head from 'next/head';
 import { useState, useEffect, useRef } from 'react';
-import Input from '../components/ui/Input';
-import Button from '../components/ui/Button';
 
 export default function Home() {
   const [messages, setMessages] = useState([]);
@@ -78,76 +76,79 @@ export default function Home() {
   };
 
   return (
-    <div className="block rounded-md shadow-sm border-gray-300 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+    <div className="flex flex-col h-screen">
       <Head>
         <title>Mind Reprogramming Assistant</title>
         <meta name="description" content="NLP Mind Reprogramming Assistant" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-col h-screen max-w-3xl mx-auto p-4">
-        <h1 className="text-2xl font-medium text-center mt-8 mb-4">What Mental Programs Can We Reprogram Today?</h1>
-        
-        <div className="flex-1 overflow-y-auto mb-4">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`mb-4 ${
-                message.role === 'user' ? 'text-right' : 'text-left'
-              }`}
-            >
+      <main className="flex flex-col items-center justify-between flex-1 w-full overflow-hidden">
+        <div className="w-full max-w-4xl px-4 flex flex-col h-full">
+          <h1 className="text-2xl font-medium text-center mt-8 mb-4">What Mental Programs Can We Reprogram Today?</h1>
+          
+          <div className="flex-1 overflow-y-auto mb-4 space-y-4">
+            {messages.map((message, index) => (
               <div
-                className={`inline-block p-3 rounded-lg ${
-                  message.role === 'user'
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-gray-200 text-gray-800'
+                key={index}
+                className={`flex ${
+                  message.role === 'user' ? 'justify-end' : 'justify-start'
                 }`}
               >
-                {message.content}
+                <div
+                  className={`p-3 rounded-lg max-w-sm ${
+                    message.role === 'user'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-200 text-gray-800'
+                  }`}
+                >
+                  {message.content}
+                </div>
               </div>
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-        
-        <div className="mt-auto">
-          <div className="relative">
-            <Input
-              label=""
-              placeholder="Ask anything"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSendMessage(inputValue);
-                }
-              }}
-            />
+            ))}
+            <div ref={messagesEndRef} />
           </div>
           
-          <div className="flex justify-center space-x-2 mt-4">
-            <Button 
-              onClick={() => handleStartBeliefAssessment()}
-              className="rounded-full"
-            >
-              Identify Beliefs
-            </Button>
-            <Button 
-              onClick={() => handleStartPowerDevelopment()}
-              className="rounded-full"
-            >
-              Develop Power
-            </Button>
-            <Button 
-              onClick={() => handleNLPProtocols()}
-              className="rounded-full"
-            >
-              NLP Protocols
-            </Button>
+          <div className="w-full mb-6">
+            <div className="relative w-full">
+              <input
+                type="text"
+                placeholder="Ask anything"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage(inputValue);
+                  }
+                }}
+                className="w-full p-3 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            
+            <div className="flex justify-center space-x-3 mt-4">
+              <button 
+                onClick={handleStartBeliefAssessment}
+                className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+              >
+                Identify Beliefs
+              </button>
+              <button 
+                onClick={handleStartPowerDevelopment}
+                className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+              >
+                Develop Power
+              </button>
+              <button 
+                onClick={handleNLPProtocols}
+                className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+              >
+                NLP Protocols
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
