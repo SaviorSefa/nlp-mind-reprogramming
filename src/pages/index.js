@@ -5,7 +5,6 @@ export default function Home() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [currentSession, setCurrentSession] = useState(null);
   const messagesEndRef = useRef(null);
 
   // Initialize with empty chat on first load
@@ -52,31 +51,11 @@ export default function Home() {
   };
 
   const processUserMessage = (content) => {
-    const lowerContent = content.toLowerCase();
-    
-    // Check for session-specific responses
-    if (currentSession) {
-      handleSessionMessage(content);
-      return;
-    }
-    
-    // Handle different intents
-    if (lowerContent.includes('limiting belief') || lowerContent.includes('belief') || lowerContent.includes('transform')) {
-      startBeliefAssessment();
-    } else if (lowerContent.includes('personal power') || lowerContent.includes('develop power')) {
-      startPowerDevelopment();
-    } else if (lowerContent.includes('submodality')) {
-      startSpecificProtocol('submodality');
-    } else if (lowerContent.includes('timeline')) {
-      startSpecificProtocol('timeline');
-    } else if (lowerContent.includes('walking')) {
-      startSpecificProtocol('walking');
-    } else {
-      // General response
-      const assistantMessage = {
-        role: 'assistant',
-        content: `I can help you with several things:
-        
+    // General response
+    const assistantMessage = {
+      role: 'assistant',
+      content: `I can help you with several things:
+      
 1. **Identify and transform limiting beliefs** - I'll guide you through a process to recognize beliefs that may be holding you back, and help you change them using proven NLP techniques.
 
 2. **Develop personal power** - I can help you build your personal power in areas like self-awareness, communication, resilience, and more.
@@ -84,25 +63,12 @@ export default function Home() {
 3. **Run specific NLP protocols** - I can guide you through protocols like Submodality Belief Change, Timeline Reimprinting, or the Walking Belief Change Pattern.
 
 What would you like to focus on today?`
-      };
-      setMessages(prev => [...prev, assistantMessage]);
-    }
-    
+    };
+    setMessages(prev => [...prev, assistantMessage]);
     setIsProcessing(false);
   };
 
-  const handleSessionMessage = (content) => {
-    if (currentSession === 'belief_assessment') {
-      handleBeliefAssessmentSession(content);
-    } else if (currentSession === 'power_development') {
-      handlePowerDevelopmentSession(content);
-    } else if (currentSession === 'protocol') {
-      handleProtocolSession(content);
-    }
-  };
-
   const startBeliefAssessment = () => {
-    setCurrentSession('belief_assessment');
     const assistantMessage = {
       role: 'assistant',
       content: `Let's identify and transform a limiting belief that might be holding you back. 
@@ -119,33 +85,7 @@ What limiting belief would you like to work on today?`
     setIsProcessing(false);
   };
 
-  const handleBeliefAssessmentSession = (content) => {
-    // This is a simplified version - in a real app, you would have more complex logic
-    // to handle the multi-step belief assessment process
-    const assistantMessage = {
-      role: 'assistant',
-      content: `I notice that your limiting belief is: "${content}"
-
-This belief appears to be related to self-worth and capability. On a scale of 1-10, how strongly do you hold this belief?
-
-All protocols and features are available for free. You have full access to:
-- Submodality Belief Change Process
-- Timeline Reimprinting
-- The Walking Belief Change Pattern
-- Mind-Lines Reframing
-- Meta-State Belief Change
-- And all other advanced protocols`
-    };
-    
-    setMessages(prev => [...prev, assistantMessage]);
-    
-    // Update the session to the next step
-    setCurrentSession('belief_intensity');
-    setIsProcessing(false);
-  };
-
   const startPowerDevelopment = () => {
-    setCurrentSession('power_development');
     const assistantMessage = {
       role: 'assistant',
       content: `I'd be happy to help you develop your personal power. Personal power is your ability to influence your environment, achieve your goals, and create the life you desire.
@@ -166,20 +106,18 @@ Which area would you like to focus on today?`
   };
 
   const startSpecificProtocol = (protocolType) => {
-    setCurrentSession('protocol');
-    
     let protocolName = "NLP Protocol";
     let protocolDescription = "This protocol will help you transform your limiting beliefs.";
     
     if (protocolType === 'submodality') {
       protocolName = "Submodality Belief Change";
-      protocolDescription = "This protocol works by changing how you represent beliefs in your mind, altering the submodalities (visual, auditory, and kinesthetic qualities) to transform limiting beliefs into empowering ones.";
+      protocolDescription = "This protocol works by changing how you represent beliefs in your mind.";
     } else if (protocolType === 'timeline') {
       protocolName = "Timeline Reimprinting";
-      protocolDescription = "This protocol helps you identify when a limiting belief was formed, and reimprint that moment with new resources and perspectives to create a more empowering belief.";
+      protocolDescription = "This protocol helps you identify when a limiting belief was formed.";
     } else if (protocolType === 'walking') {
       protocolName = "Walking Belief Change Pattern";
-      protocolDescription = "This protocol uses physical movement to anchor new beliefs, creating a kinesthetic experience of transformation as you literally walk from your limiting belief to your new empowering belief.";
+      protocolDescription = "This protocol uses physical movement to anchor new beliefs.";
     }
     
     const assistantMessage = {
@@ -195,61 +133,10 @@ To begin, please share a limiting belief you'd like to transform using this prot
     setIsProcessing(false);
   };
 
-  const handleProtocolSession = (content) => {
-    // Simplified protocol response
-    const assistantMessage = {
-      role: 'assistant',
-      content: `Thank you for sharing your limiting belief: "${content}"
-
-Now, let's begin the protocol. I'll guide you through each step:
-
-1. First, take a moment to notice how you currently represent this belief in your mind. Where do you see it? Is it an image, words, or a feeling?
-
-2. Next, think about what you would prefer to believe instead. What would be a more empowering alternative?
-
-Please share what you would prefer to believe instead.`
-    };
-    
-    setMessages(prev => [...prev, assistantMessage]);
-    setIsProcessing(false);
-  };
-
-  const handlePowerDevelopmentSession = (content) => {
-    // Simplified power development response
-    const lowerContent = content.toLowerCase();
-    let area = "self-awareness"; // Default
-    
-    if (lowerContent.includes("vision") || lowerContent.includes("purpose")) {
-      area = "vision";
-    } else if (lowerContent.includes("communication") || lowerContent.includes("influence")) {
-      area = "communication";
-    } else if (lowerContent.includes("resilience") || lowerContent.includes("adaptability")) {
-      area = "resilience";
-    } else if (lowerContent.includes("strategic") || lowerContent.includes("thinking")) {
-      area = "strategic";
-    } else if (lowerContent.includes("presence") || lowerContent.includes("charisma")) {
-      area = "presence";
-    }
-    
-    const assistantMessage = {
-      role: 'assistant',
-      content: `Great choice! Let's work on developing your ${area}. 
-
-I'll guide you through a series of exercises designed to strengthen this aspect of your personal power. These exercises are based on proven techniques from psychology, NLP, and leadership development.
-
-Are you ready to begin the first exercise? (Type "yes" when you're ready)`
-    };
-    
-    setMessages(prev => [...prev, assistantMessage]);
-    setCurrentSession('power_exercise');
-    setIsProcessing(false);
-  };
-
   const resetChat = () => {
     setMessages([
       { role: 'assistant', content: 'Hello! I\'m your NLP Mind Reprogramming assistant. I can help you identify and transform limiting beliefs, or develop your personal power. All features are available for free. How would you like to begin today?' }
     ]);
-    setCurrentSession(null);
   };
 
   return (
@@ -418,20 +305,6 @@ Are you ready to begin the first exercise? (Type "yes" when you're ready)`
                   >
                     <span className="mr-1">🔄</span>
                     Run Submodality Belief Change
-                  </button>
-                  <button 
-                    onClick={() => handleSuggestionClick("Run Timeline Reimprinting", () => startSpecificProtocol('timeline'))}
-                    className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-md text-sm border border-gray-200 flex items-center"
-                  >
-                    <span className="mr-1">⏱️</span>
-                    Run Timeline Reimprinting
-                  </button>
-                  <button 
-                    onClick={() => handleSuggestionClick("Run Walking Belief Change", () => startSpecificProtocol('walking'))}
-                    className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-md text-sm border border-gray-200 flex items-center"
-                  >
-                    <span className="mr-1">👣</span>
-                    Run Walking Belief Change
                   </button>
                 </div>
                 
