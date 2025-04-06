@@ -72,3 +72,12 @@ textarea:focus {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
+
+/* New styles for UI updates */
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.input-container {
+  margin-bottom: 1rem;
+}
