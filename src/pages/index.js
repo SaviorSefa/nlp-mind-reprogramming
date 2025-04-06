@@ -76,18 +76,20 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <Head>
         <title>Mind Reprogramming Assistant</title>
         <meta name="description" content="NLP Mind Reprogramming Assistant" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-between flex-1 w-full overflow-hidden">
-        <div className="w-full max-w-4xl px-4 flex flex-col h-full">
-          <h1 className="text-2xl font-medium text-center mt-8 mb-4">What Mental Programs Can We Reprogram Today?</h1>
+      <div className="flex-1 flex flex-col items-center justify-center">
+        <div className="w-full max-w-3xl px-4">
+          <h1 className="text-3xl font-medium text-center mt-8 mb-4 text-gray-800">
+            What Mental Programs Can We Reprogram Today?
+          </h1>
           
-          <div className="flex-1 overflow-y-auto mb-4 space-y-4">
+          <div className="flex-1 overflow-y-auto space-y-4 min-h-[400px] max-h-[500px] mb-8">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -109,8 +111,8 @@ export default function Home() {
             <div ref={messagesEndRef} />
           </div>
           
-          <div className="w-full mb-6">
-            <div className="relative w-full">
+          <div className="w-full mb-12 fixed bottom-0 left-0 right-0 max-w-3xl mx-auto px-4">
+            <div className="relative w-full mb-4">
               <input
                 type="text"
                 placeholder="Ask anything"
@@ -122,33 +124,54 @@ export default function Home() {
                     handleSendMessage(inputValue);
                   }
                 }}
-                className="w-full p-3 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-4 pl-5 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base shadow-sm"
               />
             </div>
             
-            <div className="flex justify-center space-x-3 mt-4">
+            <div className="flex justify-center space-x-2 mt-4">
               <button 
                 onClick={handleStartBeliefAssessment}
-                className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                className="px-5 py-2.5 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors text-sm font-medium"
               >
                 Identify Beliefs
               </button>
               <button 
                 onClick={handleStartPowerDevelopment}
-                className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                className="px-5 py-2.5 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors text-sm font-medium"
               >
                 Develop Power
               </button>
               <button 
                 onClick={handleNLPProtocols}
-                className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                className="px-5 py-2.5 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors text-sm font-medium"
               >
                 NLP Protocols
               </button>
             </div>
+            
+            {/* Speech to text button */}
+            <div className="absolute right-4 top-4">
+              <button 
+                className="text-gray-400 hover:text-gray-600"
+                title="Voice input"
+                onClick={() => {
+                  // Speech recognition functionality can be implemented here
+                  // This is a placeholder that preserves the button's presence
+                  alert('Voice input functionality');
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </main>
+      </div>
+      
+      <footer className="w-full text-center text-sm text-gray-500 py-4 mt-auto">
+        <p>By messaging, you agree to our Terms and have read our Privacy Policy</p>
+      </footer>
     </div>
   );
 }
