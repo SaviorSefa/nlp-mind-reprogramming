@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import BeliefAnalysisResult from '../components/assessment/BeliefAnalysisResult'
+import ProtocolExecution from '../components/protocols/ProtocolExecution'
 
 export default function Home() {
   const [currentView, setCurrentView] = useState('home');
@@ -23,6 +24,10 @@ export default function Home() {
   const handleSelectProtocol = (protocolId) => {
     setSelectedProtocol(protocolId);
     setCurrentView('protocol');
+  };
+
+  const handleProtocolComplete = () => {
+    setCurrentView('protocol-complete');
   };
 
   return (
@@ -57,6 +62,11 @@ export default function Home() {
                 onClick={() => setCurrentView('power-development')}
                 className="w-full bg-white border border-primary-600 hover:bg-primary-50 text-primary-700 font-medium py-3 px-4 rounded-md transition-colors">
                 Develop Personal Power
+              </button>
+              <button 
+                onClick={() => setCurrentView('api-setup')}
+                className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-md transition-colors">
+                API Key Setup
               </button>
             </div>
           </div>
@@ -125,6 +135,46 @@ export default function Home() {
               <button 
                 onClick={() => setCurrentView('home')}
                 className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                Return Home
+              </button>
+            </div>
+          </div>
+        )}
+
+        {currentView === 'protocol' && (
+          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Protocol Execution</h2>
+            
+            <ProtocolExecution 
+              protocolId={selectedProtocol}
+              belief={beliefText}
+              intensity={beliefIntensity}
+              onComplete={handleProtocolComplete}
+            />
+          </div>
+        )}
+
+        {currentView === 'protocol-complete' && (
+          <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Protocol Complete!</h2>
+            <p className="text-gray-600 mb-8">
+              Congratulations on completing the protocol. Your belief transformation journey has begun. 
+              Notice how your relationship with this belief changes over the coming days.
+            </p>
+            <div className="space-y-4">
+              <button 
+                onClick={()  => setCurrentView('assessment')}
+                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                Start New Assessment
+              </button>
+              <button 
+                onClick={() => setCurrentView('home')}
+                className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-md transition-colors">
                 Return Home
               </button>
             </div>
