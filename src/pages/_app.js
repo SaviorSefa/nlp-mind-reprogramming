@@ -1,9 +1,7 @@
-import '../styles/globals.css'
+import '../styles/accessibility.css'
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
 
 export default MyApp
-import '../styles/accessibility.css'
-
