@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState, useEffect, useRef } from 'react'
 import { SpeechToText } from '../components/common/SpeechUtils'
+import ClientOnly from '../components/common/ClientOnly'
 
 export default function Home() {
   const [messages, setMessages] = useState([
