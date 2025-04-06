@@ -5,7 +5,7 @@ import ClientOnly from '../components/common/ClientOnly'
 
 export default function Home() {
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Hello! I\'m your NLP Mind Reprogramming assistant. I can help you identify and transform limiting beliefs, or develop your personal power. How would you like to begin today?' }
+    { role: 'assistant', content: 'Hello! I\'m your NLP Mind Reprogramming assistant. I can help you identify and transform limiting beliefs, or develop your personal power. All features are currently available for free. How would you like to begin today?' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -117,7 +117,15 @@ What limiting belief would you like to work on today?`
       role: 'assistant',
       content: `I notice that your limiting belief is: "${content}"
 
-This belief appears to be related to self-worth and capability. On a scale of 1-10, how strongly do you hold this belief?`
+This belief appears to be related to self-worth and capability. On a scale of 1-10, how strongly do you hold this belief?
+
+All protocols and features are currently available for free. You have full access to:
+- Submodality Belief Change Process
+- Timeline Reimprinting
+- The Walking Belief Change Pattern
+- Mind-Lines Reframing
+- Meta-State Belief Change
+- And all other advanced protocols`
     };
     
     setMessages(prev => [...prev, assistantMessage]);
@@ -133,7 +141,7 @@ This belief appears to be related to self-worth and capability. On a scale of 1-
       role: 'assistant',
       content: `I'd be happy to help you develop your personal power. Personal power is your ability to influence your environment, achieve your goals, and create the life you desire.
 
-I can guide you in developing several aspects of personal power:
+All personal power development features are currently available for free. I can guide you in developing several aspects of personal power:
 
 1. **Self-Awareness** - Understand your patterns, emotions, and triggers
 2. **Vision & Purpose** - Clarify your direction and connect with meaningful goals
@@ -348,15 +356,15 @@ Is there something else I can help you with today?`
               </svg>
             </button>
           </div>
-         <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
-  <ClientOnly>
-    <SpeechToText 
-      onTranscript={(text) => setInputValue(text)}
-      placeholder="Click to speak"
-    />
-  </ClientOnly>
-  <span>Press Enter to send</span>
-</div>
+          <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
+            <ClientOnly>
+              <SpeechToText 
+                onTranscript={(text)  => setInputValue(text)}
+                placeholder="Click to speak"
+              />
+            </ClientOnly>
+            <span>Press Enter to send</span>
+          </div>
         </div>
       </div>
     </div>
