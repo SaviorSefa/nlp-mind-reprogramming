@@ -1,5 +1,4 @@
-import '../styles/accessibility.css'
-import '../styles/chat.css'
+import '../styles/styles.css'
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
