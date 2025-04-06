@@ -9,6 +9,7 @@ interface InputProps {
   error?: string;
   isFullWidth?: boolean;
   className?: string;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -17,6 +18,7 @@ export const Input: React.FC<InputProps> = ({
   placeholder,
   value,
   onChange,
+  onKeyDown,
   error,
   isFullWidth = false,
   className = '',
@@ -32,6 +34,7 @@ export const Input: React.FC<InputProps> = ({
         type={type}
         value={value}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         placeholder={placeholder}
         className={`
           block rounded-md shadow-sm border-gray-300 focus:ring-primary-500 focus:border-primary-500 sm:text-sm
@@ -45,3 +48,5 @@ export const Input: React.FC<InputProps> = ({
     </div>
   );
 };
+
+export default Input;
