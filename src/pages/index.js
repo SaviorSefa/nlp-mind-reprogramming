@@ -5,8 +5,8 @@ import ProtocolExecution from '../components/protocols/ProtocolExecution'
 import PowerDevelopment from '../components/power/PowerDevelopment'
 import PowerExercise from '../components/power/PowerExercise'
 import ApiKeySetup from '../components/common/ApiKeySetup'
+import AccessibilitySettings from '../components/common/AccessibilitySettings'
 import { SpeechToText } from '../components/common/SpeechUtils'
-import AccessibilitySettings from '../components/common/AccessibilitySettings';
 
 export default function Home() {
   const [currentView, setCurrentView] = useState('home');
@@ -68,43 +68,35 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-     <header className="bg-white shadow-sm">
-  <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-    <h1 className="text-2xl font-bold text-primary-700">
-      NLP Mind Reprogramming
-    </h1>
-    <nav className="flex items-center space-x-4">
-      <button 
-        onClick={() => setShowAccessibility(true)}
-        className="text-gray-600 hover:text-primary-700 flex items-center"
-      >
-        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-        </svg>
-        Accessibility
-      </button>
-      <button 
-        onClick={()  => setCurrentView('api-setup')}
-        className="text-gray-600 hover:text-primary-700 flex items-center"
-      >
-        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-        </svg>
-        {hasApiKey ? 'API Settings' : 'Set Up API Key'}
-      </button>
-    </nav>
-    {showAccessibility && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-      <AccessibilitySettings onClose={()  => setShowAccessibility(false)} />
-    </div>
-  </div>
-)}
-  </div>
-</header>
-
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-primary-700">
+            NLP Mind Reprogramming
+          </h1>
+          <nav className="flex items-center space-x-4">
+            <button 
+              onClick={() => setShowAccessibility(true)}
+              className="text-gray-600 hover:text-primary-700 flex items-center"
+            >
+              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+              Accessibility
+            </button>
+            <button 
+              onClick={()  => setCurrentView('api-setup')}
+              className="text-gray-600 hover:text-primary-700 flex items-center"
+            >
+              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              {hasApiKey ? 'API Settings' : 'Set Up API Key'}
+            </button>
+          </nav>
+        </div>
+      </header>
 
       <main className="container mx-auto px-4 py-8">
         {currentView === 'home' && (
@@ -180,11 +172,13 @@ export default function Home() {
               value={beliefText}
               onChange={(e) => setBeliefText(e.target.value)}>
             </textarea>
+            
             <SpeechToText 
               onTranscript={(text) => setBeliefText(text)}
-              placeholder="Click to speak your limiting belief..."            
-
-            <div className="mb-6">
+              placeholder="Click to speak your limiting belief..."
+            />
+            
+            <div className="mb-6 mt-6">
               <h3 className="text-lg font-medium text-gray-700 mb-2">How strongly do you hold this belief?</h3>
               <div className="flex items-center">
                 <input 
@@ -344,6 +338,14 @@ export default function Home() {
       <footer className="mt-12 py-6 bg-gray-800 text-white text-center">
         <p>© 2025 NLP Mind Reprogramming</p>
       </footer>
+      
+      {showAccessibility && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <AccessibilitySettings onClose={() => setShowAccessibility(false)} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
