@@ -2,12 +2,15 @@ import Head from 'next/head'
 import { useState } from 'react'
 import BeliefAnalysisResult from '../components/assessment/BeliefAnalysisResult'
 import ProtocolExecution from '../components/protocols/ProtocolExecution'
+import PowerDevelopment from '../components/power/PowerDevelopment'
+import PowerExercise from '../components/power/PowerExercise'
 
 export default function Home() {
   const [currentView, setCurrentView] = useState('home');
   const [beliefText, setBeliefText] = useState('');
   const [beliefIntensity, setBeliefIntensity] = useState(7);
   const [selectedProtocol, setSelectedProtocol] = useState('');
+  const [selectedPowerArea, setSelectedPowerArea] = useState('');
 
   const handleStartAssessment = () => {
     setCurrentView('assessment');
@@ -28,6 +31,15 @@ export default function Home() {
 
   const handleProtocolComplete = () => {
     setCurrentView('protocol-complete');
+  };
+
+  const handleStartPowerExercise = (areaId) => {
+    setSelectedPowerArea(areaId);
+    setCurrentView('power-exercise');
+  };
+
+  const handlePowerExerciseComplete = () => {
+    setCurrentView('power-exercise-complete');
   };
 
   return (
@@ -171,6 +183,56 @@ export default function Home() {
                 onClick={()  => setCurrentView('assessment')}
                 className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
                 Start New Assessment
+              </button>
+              <button 
+                onClick={() => setCurrentView('home')}
+                className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 px-4 rounded-md transition-colors">
+                Return Home
+              </button>
+            </div>
+          </div>
+        )}
+
+        {currentView === 'power-development' && (
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Personal Power Development</h2>
+            
+            <PowerDevelopment 
+              onStartExercise={handleStartPowerExercise}
+              onReturnHome={() => setCurrentView('home')}
+            />
+          </div>
+        )}
+
+        {currentView === 'power-exercise' && (
+          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Power Exercise</h2>
+            
+            <PowerExercise 
+              areaId={selectedPowerArea}
+              onComplete={handlePowerExerciseComplete}
+              onBack={() => setCurrentView('power-development')}
+            />
+          </div>
+        )}
+
+        {currentView === 'power-exercise-complete' && (
+          <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Exercise Complete!</h2>
+            <p className="text-gray-600 mb-8">
+              Great job completing this personal power exercise. Regular practice will help you develop 
+              stronger personal power in this area. Your notes have been saved.
+            </p>
+            <div className="space-y-4">
+              <button 
+                onClick={()  => setCurrentView('power-development')}
+                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                More Power Exercises
               </button>
               <button 
                 onClick={() => setCurrentView('home')}
