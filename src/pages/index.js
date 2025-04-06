@@ -1,11 +1,28 @@
 import Head from 'next/head'
 import { useState } from 'react'
+import BeliefAnalysisResult from '../components/assessment/BeliefAnalysisResult'
 
-export default function Home()  {
+export default function Home() {
   const [currentView, setCurrentView] = useState('home');
+  const [beliefText, setBeliefText] = useState('');
+  const [beliefIntensity, setBeliefIntensity] = useState(7);
+  const [selectedProtocol, setSelectedProtocol] = useState('');
 
   const handleStartAssessment = () => {
     setCurrentView('assessment');
+  };
+
+  const handleAnalyzeBelief = () => {
+    if (beliefText.trim().length < 3) {
+      alert('Please enter a belief to analyze');
+      return;
+    }
+    setCurrentView('analysis-results');
+  };
+
+  const handleSelectProtocol = (protocolId) => {
+    setSelectedProtocol(protocolId);
+    setCurrentView('protocol');
   };
 
   return (
@@ -30,11 +47,18 @@ export default function Home()  {
             <p className="text-gray-600 mb-6">
               Begin your journey to transform limiting beliefs and develop personal power.
             </p>
-            <button 
-              onClick={handleStartAssessment}
-              className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
-              Start Assessment
-            </button>
+            <div className="space-y-4">
+              <button 
+                onClick={handleStartAssessment}
+                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                Start Belief Assessment
+              </button>
+              <button 
+                onClick={() => setCurrentView('power-development')}
+                className="w-full bg-white border border-primary-600 hover:bg-primary-50 text-primary-700 font-medium py-3 px-4 rounded-md transition-colors">
+                Develop Personal Power
+              </button>
+            </div>
           </div>
         )}
 
@@ -47,7 +71,9 @@ export default function Home()  {
             <textarea 
               className="w-full p-3 border border-gray-300 rounded-md mb-4" 
               rows="4"
-              placeholder="Enter your limiting belief here...">
+              placeholder="Enter your limiting belief here..."
+              value={beliefText}
+              onChange={(e) => setBeliefText(e.target.value)}>
             </textarea>
             
             <div className="mb-6">
@@ -57,10 +83,11 @@ export default function Home()  {
                   type="range" 
                   min="1" 
                   max="10" 
-                  defaultValue="7"
+                  value={beliefIntensity}
+                  onChange={(e) => setBeliefIntensity(parseInt(e.target.value))}
                   className="w-full mr-4" 
                 />
-                <span className="text-gray-700">7/10</span>
+                <span className="text-gray-700">{beliefIntensity}/10</span>
               </div>
             </div>
             
@@ -71,8 +98,34 @@ export default function Home()  {
                 Back
               </button>
               <button 
+                onClick={handleAnalyzeBelief}
                 className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
                 Analyze Belief
+              </button>
+            </div>
+          </div>
+        )}
+
+        {currentView === 'analysis-results' && (
+          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Belief Analysis</h2>
+            
+            <BeliefAnalysisResult 
+              belief={beliefText}
+              intensity={beliefIntensity}
+              onSelectProtocol={handleSelectProtocol}
+            />
+            
+            <div className="mt-8 flex justify-between">
+              <button 
+                onClick={() => setCurrentView('assessment')}
+                className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors">
+                Back to Assessment
+              </button>
+              <button 
+                onClick={() => setCurrentView('home')}
+                className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                Return Home
               </button>
             </div>
           </div>
