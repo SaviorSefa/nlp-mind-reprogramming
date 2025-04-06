@@ -5,6 +5,7 @@ import ProtocolExecution from '../components/protocols/ProtocolExecution'
 import PowerDevelopment from '../components/power/PowerDevelopment'
 import PowerExercise from '../components/power/PowerExercise'
 import ApiKeySetup from '../components/common/ApiKeySetup'
+import { SpeechToText } from '../components/common/SpeechUtils'
 
 export default function Home() {
   const [currentView, setCurrentView] = useState('home');
@@ -159,7 +160,10 @@ export default function Home() {
               value={beliefText}
               onChange={(e) => setBeliefText(e.target.value)}>
             </textarea>
-            
+            <SpeechToText 
+              onTranscript={(text) => setBeliefText(text)}
+              placeholder="Click to speak your limiting belief..."            
+
             <div className="mb-6">
               <h3 className="text-lg font-medium text-gray-700 mb-2">How strongly do you hold this belief?</h3>
               <div className="flex items-center">
